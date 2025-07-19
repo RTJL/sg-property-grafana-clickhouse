@@ -1,0 +1,17 @@
+<functions>
+    <function>
+        <name>test_function_python</name>
+        <command>test_function.py</command>
+        <argument>
+            <type>String</type>
+            <name>a</name>
+        </argument>
+        <argument>
+            <type>String</type>
+            <name>b</name>
+        </argument>
+        <format>TabSeparated</format>
+        <return_type>Point</return_type>
+        <type>executable</type>
+    </function>
+</functions>

@@ -1,0 +1,16 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "district": "01",
+          "name": "Raffles Place, Marina, Marina Bay"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [[[103.85, 1.28], [103.86, 1.28], [103.86, 1.29], [103.85, 1.29], [103.85, 1.28]]]
+        }
+      }
+    ]
+  }

@@ -1,0 +1,53 @@
+services:
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: property-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_USERS_DEFAULT_THEME=light
+      - GF_INSTALL_PLUGINS=grafana-clickhouse-datasource 4.8.2
+    volumes:
+      - ./docker/grafana/data:/var/lib/grafana
+      - ./docker/grafana/provisioning:/etc/grafana/provisioning
+      - ./docker/grafana/gazetteer:/usr/share/grafana/public/gazetteer
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+  clickhouse:
+    build:
+      context: ./docker/clickhouse
+      dockerfile: Dockerfile
+    container_name: property-clickhouse
+    ports:
+      - "8123:8123"   # HTTP interface
+      - "9000:9000"   # Native interface
+    environment:
+      - CLICKHOUSE_DB=default
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_PASSWORD=default
+    volumes:
+      - ./docker/clickhouse/data:/var/lib/clickhouse/user_files
+      # -
+      - ./docker/clickhouse/config/override.xml:/etc/clickhouse-server/config.d/override.xml
+      # 
+      # - ./docker/clickhouse/udf/test_function.xml:/etc/clickhouse-server/test_function.xml
+      # - ./docker/clickhouse/udf/test_function.py:/var/lib/clickhouse/user_scripts/test_function.py
+      # 
+      - ./docker/clickhouse/udf/svy21_to_lat_long_function.xml:/etc/clickhouse-server/svy21_to_lat_long_function.xml
+      - ./docker/clickhouse/udf/svy21_to_lat_long_function.py:/var/lib/clickhouse/user_scripts/svy21_to_lat_long_function.py
+      
+      # - ./docker/clickhouse/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    healthcheck:
+      test: ["CMD", "wget", "http://property-clickhouse:8123/ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
