@@ -17,6 +17,9 @@ Batch numbers
 
 
 ```sh
+curl "https://eservice.ura.gov.sg/uraDataService/insertNewToken/v1"\
+  -H "AccessKey: <MY-ACCESS-KEY>"
+
 curl "https://eservice.ura.gov.sg/uraDataService/invokeUraDS/v1?service=PMI_Resi_Transaction&batch=1"\
   -H "AccessKey: <MY-ACCESS-KEY>"\
   -H "Token: <MY-TOKEN>" > /docker/clickhouse/data/batch_one.json

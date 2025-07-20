@@ -29,17 +29,17 @@ services:
       - CLICKHOUSE_DB=default
       - CLICKHOUSE_USER=default
       - CLICKHOUSE_PASSWORD=default
+      - URA_ACCESS_KEY=${URA_ACCESS_KEY?error}
     volumes:
+      # static files
       - ./docker/clickhouse/data:/var/lib/clickhouse/user_files
-      # -
+      # config override
       - ./docker/clickhouse/config/override.xml:/etc/clickhouse-server/config.d/override.xml
-      # 
-      # - ./docker/clickhouse/udf/test_function.xml:/etc/clickhouse-server/test_function.xml
-      # - ./docker/clickhouse/udf/test_function.py:/var/lib/clickhouse/user_scripts/test_function.py
-      # 
-      - ./docker/clickhouse/udf/svy21_to_lat_long_function.xml:/etc/clickhouse-server/svy21_to_lat_long_function.xml
+      # UDF config
+      - ./docker/clickhouse/udf/all_function.xml:/etc/clickhouse-server/all_function.xml
+      # UDF scripts
+      - ./docker/clickhouse/udf/get_trans.sh:/var/lib/clickhouse/user_scripts/get_trans.sh
       - ./docker/clickhouse/udf/svy21_to_lat_long_function.py:/var/lib/clickhouse/user_scripts/svy21_to_lat_long_function.py
-      
       # - ./docker/clickhouse/init.sql:/docker-entrypoint-initdb.d/init.sql
     ulimits:
       nofile:

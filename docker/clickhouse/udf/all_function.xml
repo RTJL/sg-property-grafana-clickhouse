@@ -1,0 +1,28 @@
+<functions>
+    <function>
+        <type>executable</type>
+        <name>get_trans</name>
+        <return_type>String</return_type>
+        <argument>
+            <type>String</type>
+            <name>batch</name>
+        </argument>
+        <format>TabSeparated</format>
+        <command>get_trans.sh</command>
+    </function>
+    <function>
+        <name>svy21_to_lat_long</name>
+        <command>svy21_to_lat_long_function.py</command>
+        <argument>
+            <type>String</type>
+            <name>a</name>
+        </argument>
+        <argument>
+            <type>String</type>
+            <name>b</name>
+        </argument>
+        <format>TabSeparated</format>
+        <return_type>Point</return_type>
+        <type>executable</type>
+    </function>
+</functions>
