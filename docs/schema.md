@@ -28,7 +28,7 @@ ORDER BY project;
 ## Insert
 
 ```sql
-ISNERT INTO property.transactions
+INSERT INTO property.transactions
 SELECT
   simpleJSONExtractString(result, 'project') AS project,
   simpleJSONExtractString(result, 'street') AS street,
